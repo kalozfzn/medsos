@@ -278,7 +278,7 @@
       	App.init();
       	App.profile();
         load();
-        loadcomment();
+        
         loadbutton();
         loadfollowers();
       });
@@ -289,7 +289,7 @@
         load();
         loadfollowers();
         loadbutton();
-        loadcomment();
+        
       });
       function load(){
         $.ajax({
