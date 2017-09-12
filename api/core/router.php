@@ -40,6 +40,7 @@
 
   	public static function getRedirect ($url){
 
+
         echo '<script> window.location.replace("'.MED_URL.'/'.$url.'")</script>';
     }
 
@@ -103,7 +104,7 @@
 
     public function countFollowers($id){
 
-        $getFollowers = $this->getdb()->query("SELECT COUNT(followers) AS followers FROM follow WHERE followers = '$id'");
+        $getFollowers = $this->getdb()->query("SELECT COUNT(toid) AS followers FROM follow WHERE toid = '$id'");
         $getFollowers = $getFollowers->fetch_assoc();
 
         return $getFollowers['followers'];
@@ -112,10 +113,10 @@
 
     public function countFollowing($id){
 
-        $getFollowing = $this->getdb()->query("SELECT COUNT(following) AS following FROM follow WHERE following = '$id'");
+        $getFollowing = $this->getdb()->query("SELECT COUNT(fromid) AS following FROM follow WHERE fromid = '$id'");
         $getFollowing = $getFollowing->fetch_assoc();
 
-        return $getFollowers['following'];
+        return $getFollowing['following'];
 
     }
 
@@ -158,7 +159,7 @@
                         $this::getBackend('user/_index','@logout','index');
                         break;
                     case 'profile':
-                        $this::getBackend('user/_index','@profile','index');
+                        $this::getBackend('user/_index','@profil','profile');
                         break;
                     case 'changepass':
                         $this::getBackend('user/_index','@pass','cpas');

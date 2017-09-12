@@ -1,9 +1,9 @@
 <?php
 
-$MAIN_URL        = "http://localhost:81/eresto/@media/core/";
+$MAIN_URL        = "http://localhost/eresto/medsos/core/";
 $MAIN_URL        = rtrim($MAIN_URL,'/\\');
 
-$API_URL        = "http://localhost:81/eresto/@media/api/";
+$API_URL        = "http://localhost/eresto/medsos/api/";
 $API_URL        = rtrim($API_URL,'/\\');
 
 

@@ -40,6 +40,12 @@ class CORE extends ROUTER
           return $fot;
 	}
 
+      public function insert($table, $field){
+
+        return $this->getDB()->query("INSERT INTO $table SET $field");
+
+      }
+
      public function getTimeAgo ($time_ago){
 
         $cur_time   = time();
