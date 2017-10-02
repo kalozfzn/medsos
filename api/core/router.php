@@ -1,11 +1,11 @@
-<?php 
+<?php
   /**
-  * 
+  *
   */
 
   class ROUTER extends CONNECTION
   {
-  	
+
 
   	public function AntiInjection($variable){
   		return $this->getDB()->real_escape_string($variable);
@@ -23,7 +23,7 @@
 
         else if($TypeAlert == 'success'){
 
-            echo '<script>    
+            echo '<script>
                         swal({ title: "'.$title.'", text: "'.$content.'", confirmButtonColor: "#009688", type: "success" }); </script>';
 
         }
@@ -101,6 +101,13 @@
 
         return $getUserFoto['foto'];
     }
+    public function getUserEmail($id)
+    {
+        $getUserEmail = $this->getDB()->query("SELECT userid, email FROM user WHERE userid = '$id' LIMIT 1");
+        $getUserEmail = $getUserEmail->fetch_assoc();
+
+        return $getUserEmail['email'];
+    }
 
     public function countFollowers($id){
 
@@ -133,7 +140,7 @@
     	$url = strtolower($this->getDB()->real_escape_string($url));
 
     	if (empty($url)) {
-    		
+
     		include ('public/frontend/_index/@login/index.php');
 
     	}
@@ -146,6 +153,9 @@
     				case 'beranda':
     					$this::getBackend('user/_index','@beranda','index');
     					break;
+                    case 'changepict':
+                        $this::getBackend('user/_index','@editfoto','index');
+                        break;
                     case 'register':
                         $this::getFrontend('_index','@register','index');
                         break;
@@ -153,7 +163,7 @@
                         $this::getFrontend('_index','@pict','index');
                         break;
                     case 'changeprofile':
-                        $this::getBackend('user/_index','@cprofile','index');
+                        $this::getBackend('user/_index','@editprofil','index');
                         break;
                     case 'logout':
                         $this::getBackend('user/_index','@logout','index');
@@ -162,7 +172,7 @@
                         $this::getBackend('user/_index','@profil','profile');
                         break;
                     case 'changepass':
-                        $this::getBackend('user/_index','@pass','cpas');
+                        $this::getBackend('user/_index','@editpassword','index');
                         break;
                     case 'friends':
                         $this::getBackend('user/_index','@friends','index');
@@ -176,6 +186,15 @@
                     case 'chat':
                         $this::getBackend('user/_index','@chat','index');
                         break;
+                    case 'aboutme':
+                        $this::getBackend('user/_index','@aboutme','index');
+                        break;
+                    case 'logout':
+                        $this::getBackend('user/_index','@logout','index');
+                        break;
+                    default:
+                    $this::getFrontend('_index','@404','index');
+                    break;
 
     			}
 

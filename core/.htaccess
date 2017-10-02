@@ -46,3 +46,8 @@ RewriteRule ^([0-9a-zA-Z@._-]+)/([0-9a-zA-Z@._-]+)/([0-9a-zA-Z@._-]+)/([0-9a-zA-
   BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
   Header append Vary User-Agent
 </IfModule>
+
+# Handle Forbiden
+ErrorDocument 403 http://localhost/eresto/medsos/core/403
+# Handle Not Found
+ErrorDocument 404 http://localhost/eresto/medsos/core/404

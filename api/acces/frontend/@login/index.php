@@ -47,6 +47,9 @@ $perintah = new CORE();
 							}
 
 						}
+							else {
+								echo "<script>alert('gagal verifi')</script>";
+							}
 					
 
 				}

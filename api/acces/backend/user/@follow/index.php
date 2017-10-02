@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('../../../../config/config.php');
 require('../../../../config/core.php');
 require('../../../../core/router.php');
@@ -12,8 +12,4 @@ $perintah = new CORE();
 	$to 	= $_POST['id'];
 	$date = date('Y-m-d H:i:s');
 
-	$perintah->getDB()->query("INSERT INTO follow VALUES(null,'$from','$to','$date')");
-	
-
-
-	
+	$perintah->getDB()->query("INSERT INTO follow SET fromid = '$from', toid = '$to', date = '$date'");

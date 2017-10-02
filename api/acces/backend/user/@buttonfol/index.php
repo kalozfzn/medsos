@@ -16,17 +16,20 @@ $perintah = new CORE();
 
 	    $follow = $followsql->fetch_object();
 
-		if ($follow->fromid <> "") {
+	    if ($id <> $sessionid) {
+	    	
+			if ($follow->fromid <> "") {
 
 ?>
 
 <a class="btn btn-primary" id="ufol" href="javascript:void(0)" data-script="<?php echo $id ?>"><i class="icon icon-left s7-delete-user"></i> UnFollow</a>
 <?php 
-		} 
-			else {
+			} 
+				else {
  ?>
  <a id="fol" href="javascript:void(0)" data-script="<?php echo $id ?>" class="btn btn-primary"><i class="icon icon-left s7-add-user"></i> Follow</a>
- <?php 		}
+ <?php 			}
+ 		}
   ?>
 <a class="btn btn-primary"><i class="icon icon-left s7-user"></i> Followers</a>
 <a class="btn btn-primary"><i class="icon icon-left s7-users"></i> Following</a>
