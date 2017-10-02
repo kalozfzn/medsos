@@ -11,5 +11,12 @@ $perintah = new CORE();
 	$post = $_POST['pos'];
 	$id = $_SESSION['id'];
 	$date = date('Y-m-d H:i:s');
+	if (empty($post)) {
 
-	$perintah->getDB()->query("INSERT INTO post VALUES(null,'$id','$post','$date')");
+	}
+		else {
+
+			$perintah->getDB()->query("INSERT INTO post VALUES(null,'$id','$post','$date')");		
+			
+		}
+	

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('../../../../config/config.php');
 require('../../../../config/core.php');
 require('../../../../core/router.php');
@@ -6,11 +6,15 @@ require('../../../../core/class.php');
 
 session_start();
 $perintah = new CORE();
-	
+
 	$sessionid = $_SESSION['id'];
 	$id	= $_SESSION['toid'];
-	$sql = $perintah->getDB()->query("SELECT postid, userid,content,date FROM post WHERE userid = '$id'");
+	$sql = $perintah->getDB()->query("SELECT postid, userid,content,date FROM post WHERE userid = '$id' ORDER BY postid DESC");
+
 	while ($result = $sql->fetch_object()) {
+
+    $sessionid = $_SESSION['id'];
+
 
 		$username = $perintah->getUsername($result->userid);
 
@@ -19,13 +23,17 @@ $perintah = new CORE();
 		$firstime = explode(" ", $result->date);
 
 		$time 	= explode(":", $firstime[1]);
+
+    $likesql = $perintah->getDB()->query("SELECT postid, userid, date FROM post_like WHERE postid = '$result->postid' AND userid = '$sessionid'");
+
+    $like = $likesql->fetch_object();
 ?>
 
 	<div class="row">
             <div class="col-12">
                   <div class="panel-body" style="margin: 1%;">
                       <div class="timeline-avatar"><img src="<?php echo MED_IMAGE; ?>/50/<?php echo $image; ?>" alt="Avatar" class="circle"></div>
-                      <div class="timeline-header"><span class="timeline-time"><?php echo $time[0].":".$time[1]; ?></span><span class="timeline-autor"><?php echo $username; ?></span>
+                      <div class="timeline-header"><span class="timeline-time"><?php echo $time[0].":".$time[1]; ?></span><span class="timeline-autor">	<?php echo $username; ?></span>
                         <p class="timeline-activity">Mauris condimentum est</p>
                         <hr>
                         <div class="timeline-summary">
@@ -33,33 +41,51 @@ $perintah = new CORE();
                         </div>
                         <hr>
                         <p class="text-left">
-                          <a href=""><i class="icon icon-left s7-like2"></i> Like</a>
-                          <a href="" style="color: red;"><i class="icon icon-left s7-like2" style="color: red;"></i> Like</a>
+                        <?php if ($like->userid == "") { ?>
+                          <a href="Javascript:void(0)" id="like" data-script="<?php echo $result->postid; ?>"><i class="icon icon-left s7-like2"></i> Like</a>
+                        <?php } else { ?>
+                          <a href="Javascript:void(0)" id="disslike" data-script="<?php echo $result->postid; ?>" style="color: red;"><i class="icon icon-left s7-like2" style="color: red;"></i> dissLike</a>
+                          <?php } ?>
                           <a href=""><i class="icon icon-left s7-comment"></i> Comments</a>
                         </p>
                       </div>
                       <div id="com">
+                      <?php
+
+                        $sqlcom = $perintah->getDB()->query("SELECT postid, userid, comment,date FROM post_comment
+																															WHERE postid = '$result->postid'");
+                        while ($com = $sqlcom->fetch_object()) {
+
+                          $usernameComment = $perintah->getUsername($com->userid);
+                          $imageComment = $perintah->getUserFoto($com->userid);
+
+                        ?>
+
                       	<div class="panel-body" style="box-shadow: 0.5px 0.5px 0.5px 0.5px gray;margin: 1%;">
-                      <div class="timeline-avatar"><img src="assets/img/avatars/img4.jpg" alt="Avatar" class="circle"></div>
-                      <div class="timeline-header"><span class="timeline-time">7:15 PM</span><span class="timeline-autor">Brett Harris</span>
-                        <p class="timeline-activity">Mauris condimentum est</p>
+                      <div class="timeline-avatar"><img src="<?php echo MED_IMAGE; ?>/50/<?php echo $imageComment; ?>" alt="Avatar" class="circle"></div>
+                      <div class="timeline-header"><span class="timeline-time">7:15 PM</span><span class="timeline-autor"><?php echo $usernameComment; ?></span>
+                        <p class="timeline-activity"><?php echo $com->comment; ?></p>
                         <hr>
                         <div class="timeline-summary">
-                           KomenKomen Komen Komen Komen Komen Komen Komen Komen Komen KomenKomenKomen Komen Komen KomenKomen
                            <a href="#">Readmore...</a>
                         </div>
                       </div>
                     </div>
+
+                    <?php
+                      }
+                     ?>
                       </div>
                     <div class="panel-body" style="box-shadow: 0.5px 0.5px 0.5px 0.5px gray;margin: 1%;">
-                    <div class="form-group row">
+
                       <div class="col-sm-12">
-                        <textarea class="form-control" placeholder="Komentari.." rows="5"></textarea>
+                        <textarea id="met" class="form-control" placeholder="Komentari.." rows="5"></textarea>
                       </div>
                     </div>
                     <p class="text-right">
-                      <button class="btn btn-primary"><i class="icon icon-left s7-next-2"></i>Kirim</button>
-                      </p>
+                      <a href="Javascript:void(0)" data-script="<?php echo $result->postid; ?>" id="com" class="btn btn-primary"><i class="icon icon-left s7-next-2"></i>Kirim</a>
+                    </p>
+
             </div>
     </div>
 <?php } ?>

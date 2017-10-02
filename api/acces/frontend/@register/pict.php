@@ -9,16 +9,15 @@ require('../../../core/class.php');
 	$perintah = new CORE();
 
 	$foto = $_FILES['foto'];
+	$path = "../../../../core/static/upload";
 
-	$upload = $perintah->upload($foto);
+	$upload = $perintah->upload($foto,$path);
 	$sessionUsername = $_SESSION['username'];
 
-	
+
 		 	$pict = $perintah->getDB()->query("UPDATE user SET foto = '$upload' WHERE username = '$sessionUsername'");
-		 	
+
 			 	if ($pict) {
 			 		$perintah->getRedirect("");
 			 		session_unset();
 			 	}
-
-		
